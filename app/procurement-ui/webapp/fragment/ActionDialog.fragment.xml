@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="idActionDialog"
+        title="{local>/dialog/title}"
+        type="Message"
+        state="{local>/dialog/state}">
+
+        <content>
+            <VBox id="idDialogVBox" class="sapUiSmallMargin">
+                <Text
+                    id="idDialogMessage"
+                    text="{local>/dialog/message}"
+                    class="sapUiSmallMarginBottom"/>
+                <Label
+                    id="idCommentsLabel"
+                    text="{i18n>label.comments}"
+                    required="{local>/dialog/commentsRequired}"/>
+                <TextArea
+                    id="idCommentsInput"
+                    value="{local>/dialog/comments}"
+                    placeholder="Enter your comments..."
+                    rows="4"
+                    growing="true"
+                    width="100%"/>
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button
+                id="idConfirmBtn"
+                text="Confirm"
+                type="{local>/dialog/confirmType}"
+                press=".onConfirmAction"/>
+            <Button
+                id="idCancelBtn"
+                text="Cancel"
+                press=".onCloseDialog"/>
+        </buttons>
+    </Dialog>
+
+</core:FragmentDefinition>

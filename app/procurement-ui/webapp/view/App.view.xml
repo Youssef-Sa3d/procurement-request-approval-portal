@@ -1,0 +1,67 @@
+<mvc:View
+    controllerName="procurement.ui.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <App id="idApp">
+        <Page id="idShellPage" showHeader="true" enableScrolling="false">
+
+            <customHeader>
+                <Bar id="idAppHeader">
+                    <contentLeft>
+                        <Title id="idAppTitle" text="Procurement Portal" level="H4"/>
+                    </contentLeft>
+                    <contentMiddle>
+                        <SegmentedButton
+                            id="idNavSegmented"
+                            select=".onNavSelect"
+                            selectedKey="RequestList">
+                            <items>
+                                <SegmentedButtonItem
+                                    id="idNavRequests"
+                                    text="My Requests"
+                                    key="RequestList"
+                                    icon="sap-icon://list"/>
+                                <SegmentedButtonItem
+                                    id="idNavApprovals"
+                                    text="Approvals"
+                                    key="ApprovalInbox"
+                                    icon="sap-icon://approvals"/>
+                                <SegmentedButtonItem
+                                    id="idNavBudget"
+                                    text="Budget"
+                                    key="BudgetDashboard"
+                                    icon="sap-icon://money-bills"/>
+                            </items>
+                        </SegmentedButton>
+                    </contentMiddle>
+                    <contentRight>
+                        <HBox id="idRoleSwitcher" alignItems="Center">
+                            <core:Icon
+                                id="idUserIcon"
+                                src="sap-icon://person-placeholder"
+                                size="1.2rem"
+                                class="sapUiSmallMarginEnd"/>
+                            <Select
+                                id="idUserSelect"
+                                change=".onUserChange"
+                                items="{auth>/employees}">
+                                <core:Item
+                                    key="{auth>ID}"
+                                    text="{auth>name} ({auth>role})"/>
+                            </Select>
+                        </HBox>
+                    </contentRight>
+                </Bar>
+            </customHeader>
+
+            <content>
+                <NavContainer id="idNavContainer" autoFocus="false"/>
+            </content>
+
+        </Page>
+    </App>
+
+</mvc:View>

@@ -1,0 +1,149 @@
+/* ── Procurement Portal – Professional Theme ──────────────────── */
+
+/* Shell Bar refinements */
+.sapFShellBar {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Side Navigation */
+.sapTntSideNavigation {
+    border-right: 1px solid var(--sapGroup_ContentBorderColor);
+}
+.sapTntNavLI .sapTntNavLIText {
+    font-weight: 500;
+}
+
+/* Page headers */
+.sapMPageHeader .sapMBarMiddle .sapMTitle {
+    font-weight: 600;
+}
+
+/* Tables – alternating rows & hover */
+.sapMListTblRow:nth-child(even) {
+    background-color: var(--sapList_AlternatingBackground);
+}
+.sapMListTblRow:hover {
+    background-color: var(--sapList_Hover_Background) !important;
+    transition: background-color 0.15s ease;
+}
+.sapMListTblCell {
+    transition: background-color 0.15s ease;
+}
+
+/* Navigation list items */
+.sapMListTblRow[class*="Navigation"] .sapMListTblNavCol {
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+}
+.sapMListTblRow:hover .sapMListTblNavCol {
+    opacity: 1;
+}
+
+/* Panels – card style */
+.sapMPanel {
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+.sapMPanelHdr {
+    font-weight: 600;
+}
+
+/* Status badges */
+.sapMObjStatusActive .sapMObjStatusText {
+    font-weight: 600;
+}
+
+/* Object Numbers – amount styling */
+.sapMObjectNumberEmph .sapMObjectNumberText {
+    font-weight: 700;
+}
+
+/* SimpleForm labels */
+.sapUiFormResGridCont .sapMLabel {
+    color: var(--sapContent_LabelColor);
+    font-weight: 500;
+}
+
+/* Buttons – subtle elevation on hover */
+.sapMBtnEmphasized:hover {
+    box-shadow: 0 2px 8px rgba(var(--sapButton_Emphasized_Background), 0.25);
+}
+
+/* Dialog polish */
+.sapMDialog {
+    border-radius: 0.75rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+
+/* GenericTile refinements */
+.sapMGT {
+    border-radius: 0.75rem !important;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.sapMGT:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ProgressIndicator bar */
+.sapMPI {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Smooth page transitions */
+.sapMNavItem {
+    transition: opacity 0.2s ease;
+}
+
+/* ShellBar profile area */
+.procRoleSwitcher {
+    margin-right: 0.5rem;
+}
+.procRoleSwitcher .sapMSlt {
+    min-width: 12rem;
+}
+.procRoleSwitcher .sapMSltLabel {
+    font-size: 0.8125rem;
+}
+
+/* Search field refinement */
+.sapMSFF {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* Object Page header */
+.sapUxAPObjectPageHeaderTitle {
+    padding-bottom: 0.5rem;
+}
+
+/* Approval timeline – custom styling */
+.procTimelineItem {
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--sapContent_ForegroundBorderColor);
+    margin-bottom: 0.5rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: var(--sapGroup_ContentBackground);
+    transition: border-color 0.15s ease;
+}
+.procTimelineItem:hover {
+    border-left-color: var(--sapContent_IconColor);
+}
+
+/* IconTabBar in subHeader – compact */
+.sapMITBHead {
+    padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .procRoleSwitcher .sapMSlt {
+        min-width: 8rem;
+    }
+    .sapFShellBarOTitle {
+        display: none;
+    }
+}

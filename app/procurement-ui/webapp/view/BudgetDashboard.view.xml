@@ -1,0 +1,153 @@
+<mvc:View
+    controllerName="procurement.ui.controller.BudgetDashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <Page
+        id="idBudgetDashboardPage"
+        title="{i18n>page.budget.title}"
+        showNavButton="false">
+
+        <content>
+            <FlexBox
+                id="idCardsContainer"
+                wrap="Wrap"
+                alignItems="Start"
+                class="sapUiSmallMargin">
+
+                <items>
+                    <FlexBox
+                        id="idCardsFlexBox"
+                        wrap="Wrap"
+                        alignItems="Start"
+                        items="{
+                            path: '/Budgets',
+                            parameters: {
+                                $expand: 'department'
+                            }
+                        }">
+                        <GenericTile
+                            id="idBudgetCard"
+                            header="{department/name}"
+                            subheader="FY {fiscalYear}"
+                            frameType="TwoByOne"
+                            state="{
+                                path: 'remainingAmount',
+                                formatter: '.formatter.formatBudgetTileState'
+                            }"
+                            class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+
+                            <tileContent>
+                                <TileContent id="idTileContent">
+                                    <content>
+                                        <NumericContent
+                                            id="idNumericContent"
+                                            value="{remainingAmount}"
+                                            scale="{currency}"
+                                            valueColor="{
+                                                parts: [
+                                                    'remainingAmount',
+                                                    'totalAmount'
+                                                ],
+                                                formatter: '.formatter.formatBudgetValueColor'
+                                            }"
+                                            indicator="None"/>
+                                    </content>
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </FlexBox>
+                </items>
+            </FlexBox>
+
+            <!-- Detail Table -->
+            <Panel
+                id="idBudgetDetailPanel"
+                headerText="Budget Summary"
+                expandable="false"
+                class="sapUiSmallMargin">
+
+                <Table
+                    id="idBudgetTable"
+                    items="{
+                        path: '/Budgets',
+                        parameters: {
+                            $expand: 'department'
+                        }
+                    }">
+
+                    <columns>
+                        <Column id="idColDept" width="auto">
+                            <Text text="Department"/>
+                        </Column>
+                        <Column id="idColTotal"
+                            width="9rem" hAlign="End">
+                            <Text text="Total Budget"/>
+                        </Column>
+                        <Column id="idColConsumed"
+                            width="9rem" hAlign="End">
+                            <Text text="Consumed"/>
+                        </Column>
+                        <Column id="idColRemaining"
+                            width="9rem" hAlign="End">
+                            <Text text="Remaining"/>
+                        </Column>
+                        <Column id="idColUsage"
+                            width="10rem" hAlign="End"
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                            <Text text="Usage"/>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem id="idBudgetRow">
+                            <cells>
+                                <Text id="idCellDept"
+                                    text="{department/name}"/>
+                                <ObjectNumber
+                                    id="idCellTotal"
+                                    number="{totalAmount}"
+                                    unit="{currency}"/>
+                                <ObjectNumber
+                                    id="idCellConsumed"
+                                    number="{consumedAmount}"
+                                    unit="{currency}"/>
+                                <ObjectNumber
+                                    id="idCellRemaining"
+                                    number="{remainingAmount}"
+                                    unit="{currency}"
+                                    state="{
+                                        parts: [
+                                            'remainingAmount',
+                                            'totalAmount'
+                                        ],
+                                        formatter: '.formatter.formatBudgetState'
+                                    }"/>
+                                <ProgressIndicator
+                                    id="idUsageBar"
+                                    percentValue="{
+                                        parts: [
+                                            'consumedAmount',
+                                            'totalAmount'
+                                        ],
+                                        formatter: '.formatter.formatBudgetPercent'
+                                    }"
+                                    state="{
+                                        parts: [
+                                            'remainingAmount',
+                                            'totalAmount'
+                                        ],
+                                        formatter: '.formatter.formatBudgetState'
+                                    }"
+                                    showValue="true"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+        </content>
+    </Page>
+
+</mvc:View>

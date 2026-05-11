@@ -1,0 +1,6 @@
+ID,name,email,country,currency,category,createdAt,createdBy,modifiedAt,modifiedBy
+v1000000-0000-0000-0000-000000000001,TechSupply Inc,contact@techsupply.com,United States,USD,IT,2026-01-01T08:00:00Z,admin,2026-01-01T08:00:00Z,admin
+v1000000-0000-0000-0000-000000000002,BuildRight Co,info@buildright.com,United Kingdom,GBP,Facilities,2026-01-01T08:00:00Z,admin,2026-01-01T08:00:00Z,admin
+v1000000-0000-0000-0000-000000000003,BrandBoost Agency,hello@brandboost.com,Germany,EUR,Marketing,2026-01-01T08:00:00Z,admin,2026-01-01T08:00:00Z,admin
+v1000000-0000-0000-0000-000000000004,OpsGlobal Ltd,ops@opsglobal.com,Canada,CAD,Operations,2026-01-01T08:00:00Z,admin,2026-01-01T08:00:00Z,admin
+v1000000-0000-0000-0000-000000000005,General Supplies LLC,gs@generalsupplies.com,India,INR,Other,2026-01-01T08:00:00Z,admin,2026-01-01T08:00:00Z,admin

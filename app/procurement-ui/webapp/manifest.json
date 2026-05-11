@@ -1,0 +1,96 @@
+{
+  "_version": "1.65.0",
+
+  "sap.app": {
+    "id": "procurement.ui",
+    "type": "application",
+    "title": "Procurement Portal",
+    "description": "Purchase Request and Approval Management",
+    "applicationVersion": { "version": "1.0.0" },
+    "dataSources": {
+      "procurement": {
+        "uri": "/odata/v4/procurement/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+
+  "sap.ui5": {
+    "resources": {
+      "css": [
+        { "uri": "css/style.css" }
+      ]
+    },
+    "rootView": {
+      "viewName": "procurement.ui.view.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.uxap": {}
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "procurement",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true
+        }
+      },
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "procurement.ui.i18n.i18n",
+          "supportedLocales": [""],
+          "fallbackLocale": ""
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "procurement.ui.view",
+        "controlId": "idNavContainer",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        { "name": "RequestList",    "pattern": "",                      "target": "RequestList" },
+        { "name": "CreateRequest",  "pattern": "requests/new",          "target": "CreateRequest" },
+        { "name": "RequestDetail",  "pattern": "requests/{requestID}",  "target": "RequestDetail" },
+        { "name": "ApprovalInbox",  "pattern": "approvals",             "target": "ApprovalInbox" },
+        { "name": "ApprovalDetail", "pattern": "approvals/{requestID}", "target": "ApprovalDetail" },
+        { "name": "BudgetDashboard","pattern": "budgets",               "target": "BudgetDashboard" }
+      ],
+      "targets": {
+        "RequestList":    { "viewName": "RequestList",    "viewLevel": 1 },
+        "CreateRequest":  { "viewName": "CreateRequest",  "viewLevel": 2 },
+        "RequestDetail":  { "viewName": "RequestDetail",  "viewLevel": 2 },
+        "ApprovalInbox":  { "viewName": "ApprovalInbox",  "viewLevel": 1 },
+        "ApprovalDetail": { "viewName": "ApprovalDetail", "viewLevel": 2 },
+        "BudgetDashboard":{ "viewName": "BudgetDashboard","viewLevel": 1 }
+      }
+    }
+  }
+}

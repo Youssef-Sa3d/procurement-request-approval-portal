@@ -1,0 +1,70 @@
+ID: procurement-portal
+version: 1.0.0
+_schema-version: '3.1'
+
+modules:
+  - name: procurement-portal-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: procurement-hana-db
+      - name: procurement-destination
+      - name: procurement-xsuaa
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 256M
+    build-parameters:
+      builder: npm
+      build-result: .
+      ignore:
+        - node_modules/
+        - default-env.json
+
+  - name: procurement-portal-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: procurement-hana-db
+    parameters:
+      buildpack: nodejs_buildpack
+
+  - name: procurement-portal-ui
+    type: approuter.nodejs
+    path: app/procurement-ui
+    requires:
+      - name: procurement-xsuaa
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: procurement-destination
+    parameters:
+      memory: 128M
+      disk-quota: 256M
+    build-parameters:
+      ignore:
+        - node_modules/
+        - .npmrc
+        - default-env.json
+
+resources:
+  - name: procurement-hana-db
+    type: org.cloudfoundry.existing-service
+
+  - name: procurement-destination
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: procurement-destination
+
+  - name: procurement-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json

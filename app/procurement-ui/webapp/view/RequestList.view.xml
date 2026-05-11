@@ -1,0 +1,156 @@
+<mvc:View
+    controllerName="procurement.ui.controller.RequestList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <Page
+        id="idRequestListPage"
+        title="{i18n>page.requestList.title}"
+        showNavButton="false">
+
+        <headerContent>
+            <Button
+                id="idNewRequestButton"
+                text="{i18n>btn.newRequest}"
+                type="Emphasized"
+                press=".onNewRequestButtonPress"
+                visible="{auth>/isEmployee}"/>
+        </headerContent>
+
+        <subHeader>
+            <Bar>
+                <contentLeft>
+                    <SearchField
+                        id="idSearchField"
+                        placeholder="{i18n>search.placeholder}"
+                        width="20rem"
+                        search=".onSearchFieldSearch"/>
+                </contentLeft>
+                <contentRight>
+                    <IconTabBar
+                        id="idStatusFilter"
+                        select=".onIconTabBarSelect"
+                        backgroundDesign="Transparent">
+                        <items>
+                            <IconTabFilter
+                                id="idFilterAll"
+                                text="All"
+                                key="All"/>
+                            <IconTabFilter
+                                id="idFilterDraft"
+                                text="Draft"
+                                key="Draft"/>
+                            <IconTabFilter
+                                id="idFilterSubmitted"
+                                text="Submitted"
+                                key="Submitted"/>
+                            <IconTabFilter
+                                id="idFilterManagerApproved"
+                                text="Manager Approved"
+                                key="ManagerApproved"/>
+                            <IconTabFilter
+                                id="idFilterHODApproved"
+                                text="HOD Approved"
+                                key="HODApproved"/>
+                            <IconTabFilter
+                                id="idFilterFinanceApproved"
+                                text="Finance Approved"
+                                key="FinanceApproved"/>
+                            <IconTabFilter
+                                id="idFilterRejected"
+                                text="Rejected"
+                                key="Rejected"/>
+                        </items>
+                    </IconTabBar>
+                </contentRight>
+            </Bar>
+        </subHeader>
+
+        <content>
+            <Table
+                id="idRequestTable"
+                items="{
+                    path: '/PurchaseRequests',
+                    sorter: {
+                        path: 'createdAt',
+                        descending: true
+                    }
+                }"
+                noDataText="{i18n>msg.noRequests}"
+                growing="true"
+                growingThreshold="20">
+
+                <columns>
+                    <Column id="idColNumber"    width="9rem">
+                        <Text text="{i18n>requestList.col.number}"/>
+                    </Column>
+                    <Column id="idColTitle"     width="auto">
+                        <Text text="{i18n>requestList.col.title}"/>
+                    </Column>
+                    <Column id="idColStatus"    width="10rem">
+                        <Text text="{i18n>requestList.col.status}"/>
+                    </Column>
+                    <Column id="idColAmount"    width="9rem" hAlign="End">
+                        <Text text="{i18n>requestList.col.amount}"/>
+                    </Column>
+                    <Column id="idColDept"      width="9rem"
+                        minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>requestList.col.department}"/>
+                    </Column>
+                    <Column id="idColVendor"    width="10rem"
+                        minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>requestList.col.vendor}"/>
+                    </Column>
+                    <Column id="idColSubmitted" width="9rem"
+                        minScreenWidth="Desktop" demandPopin="true">
+                        <Text text="{i18n>requestList.col.submitted}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem
+                        id="idRequestRow"
+                        press=".onColumnListItemPress"
+                        type="Navigation">
+                        <cells>
+                            <ObjectIdentifier
+                                id="idCellNumber"
+                                title="{requestNumber}"/>
+                            <Text
+                                id="idCellTitle"
+                                text="{title}"/>
+                            <ObjectStatus
+                                id="idCellStatus"
+                                text="{
+                                    path: 'status',
+                                    formatter: '.formatter.formatStatusText'
+                                }"
+                                state="{
+                                    path: 'status',
+                                    formatter: '.formatter.formatStatus'
+                                }"/>
+                            <ObjectNumber
+                                id="idCellAmount"
+                                number="{totalAmount}"
+                                unit="{currency}"/>
+                            <Text
+                                id="idCellDept"
+                                text="{department/name}"/>
+                            <Text
+                                id="idCellVendor"
+                                text="{vendor/name}"/>
+                            <Text
+                                id="idCellSubmitted"
+                                text="{
+                                    path: 'submittedAt',
+                                    formatter: '.formatter.formatDate'
+                                }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+
+</mvc:View>

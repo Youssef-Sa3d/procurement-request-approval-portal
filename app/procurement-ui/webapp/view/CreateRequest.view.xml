@@ -1,0 +1,192 @@
+<mvc:View
+    controllerName="procurement.ui.controller.CreateRequest"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page
+        id="idCreateRequestPage"
+        title="{i18n>page.createRequest.title}"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+
+        <content>
+            <!-- Request Details Form -->
+            <f:SimpleForm
+                id="idRequestForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="4"
+                labelSpanS="12"
+                columnsXL="2"
+                columnsL="2"
+                columnsM="1">
+
+                <f:content>
+                    <Label id="idLabelTitle"
+                        text="{i18n>label.title}"
+                        required="true"/>
+                    <Input
+                        id="idInputTitle"
+                        value="{local>/title}"
+                        placeholder="e.g. Laptop procurement for dev team"
+                        valueLiveUpdate="true"/>
+
+                    <Label id="idLabelDept"
+                        text="{i18n>label.department}"
+                        required="true"/>
+                    <Select
+                        id="idSelectDept"
+                        selectedKey="{local>/department_ID}"
+                        items="{
+                            path: '/Departments',
+                            sorter: { path: 'name' }
+                        }">
+                        <core:Item
+                            key="{ID}"
+                            text="{name}"/>
+                    </Select>
+
+                    <Label id="idLabelVendor"
+                        text="{i18n>label.vendor}"
+                        required="true"/>
+                    <Select
+                        id="idSelectVendor"
+                        selectedKey="{local>/vendor_ID}"
+                        items="{
+                            path: '/Vendors',
+                            sorter: { path: 'name' }
+                        }">
+                        <core:Item
+                            key="{ID}"
+                            text="{name}"/>
+                    </Select>
+
+                    <Label id="idLabelCurrency"
+                        text="{i18n>label.currency}"/>
+                    <Select
+                        id="idSelectCurrency"
+                        selectedKey="{local>/currency}">
+                        <core:Item key="USD" text="USD — US Dollar"/>
+                        <core:Item key="EUR" text="EUR — Euro"/>
+                        <core:Item key="GBP" text="GBP — British Pound"/>
+                        <core:Item key="EGP" text="EGP — Egyptian Pound"/>
+                    </Select>
+
+                    <Label id="idLabelJustification"
+                        text="{i18n>label.justification}"/>
+                    <TextArea
+                        id="idInputJustification"
+                        value="{local>/justification}"
+                        rows="3"
+                        growing="true"
+                        width="100%"/>
+                </f:content>
+            </f:SimpleForm>
+
+            <!-- Line Items Section -->
+            <Panel
+                id="idItemsPanel"
+                headerText="{i18n>label.items}"
+                expandable="false">
+
+                <Table
+                    id="idItemsTable"
+                    items="{local>/items}"
+                    noDataText="No items added yet.">
+
+                    <headerToolbar>
+                        <Toolbar id="idItemsToolbar">
+                            <ToolbarSpacer/>
+                            <Button
+                                id="idAddItemBtn"
+                                text="{i18n>btn.addItem}"
+                                icon="sap-icon://add"
+                                press=".onAddItem"/>
+                        </Toolbar>
+                    </headerToolbar>
+
+                    <columns>
+                        <Column id="idColItemDesc" width="auto">
+                            <Text text="{i18n>createRequest.col.description}"/>
+                        </Column>
+                        <Column id="idColItemQty" width="6rem" hAlign="End">
+                            <Text text="{i18n>createRequest.col.qty}"/>
+                        </Column>
+                        <Column id="idColItemPrice" width="9rem" hAlign="End">
+                            <Text text="{i18n>createRequest.col.unitPrice}"/>
+                        </Column>
+                        <Column id="idColItemAmount" width="9rem" hAlign="End">
+                            <header>
+                                <Text text="{i18n>createRequest.col.amount}"/>
+                            </header>
+                            <footer>
+                                <Label id="idTotalLabel" text="Total:"/>
+                            </footer>
+                        </Column>
+                        <Column id="idColItemDelete" width="4rem">
+                            <footer>
+                                <ObjectNumber
+                                    id="idTotalAmount"
+                                    number="{local>/totalAmount}"
+                                    unit="{local>/currency}"
+                                    emphasized="true"/>
+                            </footer>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem id="idItemRow">
+                            <cells>
+                                <Input
+                                    id="idItemDesc"
+                                    value="{local>description}"
+                                    placeholder="Item description"/>
+                                <StepInput
+                                    id="idItemQty"
+                                    value="{local>quantity}"
+                                    min="1"
+                                    step="1"
+                                    change=".onItemChange"/>
+                                <Input
+                                    id="idItemPrice"
+                                    value="{local>unitPrice}"
+                                    type="Number"
+                                    change=".onItemChange"/>
+                                <ObjectNumber
+                                    id="idItemAmount"
+                                    number="{local>amount}"
+                                    unit="{local>/currency}"/>
+                                <Button
+                                    id="idDeleteItemBtn"
+                                    icon="sap-icon://delete"
+                                    type="Transparent"
+                                    press=".onDeleteItem"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+        </content>
+
+        <footer>
+            <Toolbar id="idFooterToolbar">
+                <ToolbarSpacer/>
+                <Button
+                    id="idSaveDraftBtn"
+                    text="{i18n>btn.saveDraft}"
+                    press=".onSaveDraft"/>
+                <Button
+                    id="idSubmitBtn"
+                    text="{i18n>btn.submit}"
+                    type="Emphasized"
+                    press=".onSubmit"/>
+            </Toolbar>
+        </footer>
+    </Page>
+
+</mvc:View>

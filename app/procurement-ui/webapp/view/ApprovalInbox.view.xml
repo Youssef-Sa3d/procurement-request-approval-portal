@@ -1,0 +1,87 @@
+<mvc:View
+    controllerName="procurement.ui.controller.ApprovalInbox"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <Page
+        id="idApprovalInboxPage"
+        title="{i18n>page.approvalInbox.title}"
+        showNavButton="false">
+
+        <subHeader>
+            <Bar id="idAiSubHeader">
+                <contentLeft>
+                    <SearchField
+                        id="idAiSearchField"
+                        placeholder="{i18n>search.placeholder}"
+                        width="20rem"
+                        search=".onSearchFieldSearch"/>
+                </contentLeft>
+                <contentRight>
+                    <Text
+                        id="idAiPendingCount"
+                        text="{
+                            path: 'local>/pendingCount',
+                            formatter: '.formatter.formatPendingCount'
+                        }"/>
+                </contentRight>
+            </Bar>
+        </subHeader>
+
+        <content>
+            <Table
+                id="idAiApprovalTable"
+                items="{local>/requests}"
+                noDataText="{i18n>msg.noApprovals}"
+                growing="true"
+                growingThreshold="20">
+
+                <columns>
+                    <Column id="idAiColNumber"      width="9rem">
+                        <Text text="{i18n>requestList.col.number}"/>
+                    </Column>
+                    <Column id="idAiColTitle"       width="auto">
+                        <Text text="{i18n>requestList.col.title}"/>
+                    </Column>
+                    <Column id="idAiColRequestedBy" width="10rem"
+                        minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Requested By"/>
+                    </Column>
+                    <Column id="idAiColDept"        width="9rem"
+                        minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>requestList.col.department}"/>
+                    </Column>
+                    <Column id="idAiColAmount"      width="9rem" hAlign="End">
+                        <Text text="{i18n>requestList.col.amount}"/>
+                    </Column>
+                    <Column id="idAiColSubmitted"   width="9rem"
+                        minScreenWidth="Desktop" demandPopin="true">
+                        <Text text="{i18n>requestList.col.submitted}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem
+                        id="idAiApprovalRow"
+                        press=".onColumnListItemPress"
+                        type="Navigation">
+                        <cells>
+                            <ObjectIdentifier id="idAiCellNumber"      title="{local>requestNumber}"/>
+                            <Text             id="idAiCellTitle"       text="{local>title}"/>
+                            <Text             id="idAiCellRequestedBy" text="{local>requestedBy/name}"/>
+                            <Text             id="idAiCellDept"        text="{local>department/name}"/>
+                            <ObjectNumber     id="idAiCellAmount"      number="{local>totalAmount}" unit="{local>currency}"/>
+                            <Text             id="idAiCellSubmitted"
+                                text="{
+                                    path: 'local>submittedAt',
+                                    formatter: '.formatter.formatDate'
+                                }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+
+</mvc:View>

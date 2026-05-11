@@ -1,0 +1,14 @@
+{
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "[production]": {
+        "kind": "hana",
+        "deploy-format": "hdbtable"
+      }
+    }
+  },
+  "hana": {
+    "deploy-format": "hdbtable"
+  }
+}

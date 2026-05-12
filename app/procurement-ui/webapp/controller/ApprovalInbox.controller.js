@@ -29,18 +29,44 @@ sap.ui.define([
         async _loadPendingApprovals() {
             try {
                 const oAuthModel = this.getOwnerComponent().getModel("auth");
-                const sEmployeeID = oAuthModel.getProperty("/employeeID");
+                const sRole = oAuthModel.getProperty("/role");
 
-                const oODataModel = this.getView().getModel();
-                const oOperation = oODataModel.bindContext("/getMyPendingApprovals(...)");
-                oOperation.setParameter("employeeID", sEmployeeID);
+                const statusMap = {
+                    Manager:        "Submitted",
+                    DepartmentHead: "ManagerApproved",
+                    Finance:        "HODApproved"
+                };
 
-                await oOperation.execute();
+                const sStatus = statusMap[sRole];
+                if (!sStatus) {
+                    this.getView().getModel("local").setProperty("/requests", []);
+                    this.getView().getModel("local").setProperty("/allRequests", []);
+                    this.getView().getModel("local").setProperty("/pendingCount", 0);
+                    return;
+                }
 
-                const aResults = oOperation.getBoundContext().getObject().value;
+                const oModel = this.getView().getModel();
+                const sServiceUrl = (oModel.sServiceUrl || "/odata/v4/procurement")
+                    .replace(/\/$/, "");
+
+                const sUrl = `${sServiceUrl}/PurchaseRequests` +
+                    `?$filter=status eq '${sStatus}'` +
+                    `&$select=ID,requestNumber,title,totalAmount,currency,submittedAt,department_ID`;
+
+                console.log("[ApprovalInbox] fetching:", sUrl);
+
+                const res = await fetch(sUrl, {
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!res.ok) throw new Error(await res.text());
+
+                const data = await res.json();
+                const aResults = data.value || [];
+
                 const oLocalModel = this.getView().getModel("local");
-                oLocalModel.setProperty("/requests", aResults);
-                oLocalModel.setProperty("/allRequests", aResults);
+                oLocalModel.setProperty("/requests",     aResults);
+                oLocalModel.setProperty("/allRequests",  aResults);
                 oLocalModel.setProperty("/pendingCount", aResults.length);
 
             } catch (oError) {

@@ -1,6 +1,23 @@
 {
   "xsappname": "procurement-portal",
   "tenant-mode": "dedicated",
-  "scopes": [],
-  "role-templates": []
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "Procurement portal user"
+    }
+  ],
+  "authorities": ["$XSAPPNAME.User"],
+  "role-templates": [
+    {
+      "name": "User",
+      "scope-references": ["$XSAPPNAME.User"]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "ProcurementUser",
+      "role-template-references": ["$XSAPPNAME.User"]
+    }
+  ]
 }

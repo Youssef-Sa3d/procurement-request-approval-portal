@@ -1,5 +1,6 @@
 using { procurement.db as db } from '../db/schema';
 
+@requires: 'authenticated-user'
 service ProcurementService @(path: '/odata/v4/procurement') {
     @readonly
     entity Employees        as projection on db.Employees;

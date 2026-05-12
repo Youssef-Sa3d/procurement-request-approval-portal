@@ -11,18 +11,6 @@
       "authenticationType": "xsuaa"
     },
     {
-      "source": "^/resources/(.*)$",
-      "target": "$1",
-      "localDir": "webapp",
-      "authenticationType": "none"
-    },
-    {
-      "source": "^/test-resources/(.*)$",
-      "target": "$1",
-      "localDir": "webapp",
-      "authenticationType": "none"
-    },
-    {
       "source": "^(.*)$",
       "target": "$1",
       "localDir": "webapp",
